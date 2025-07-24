@@ -11,8 +11,7 @@
     "lint": "./node_modules/.bin/eslint .",
     "update": "ncu -i --format group",
     "serve": "node ./node_modules/http-server/bin/http-server",
-    "watch": "gulp watch",
-    "prepare": "husky"
+    "watch": "gulp watch"
   },
   "engines": {
     "node": ">=12.18.3",
@@ -28,7 +27,6 @@
     "gulp-remove-code": "^3.0.4",
     "gulp-sass": "^6.0.0",
     "http-server": "^14.1.1",
-    "husky": "^9.1.7",
     "mocha": "^11.0.1",
     "npm-check-updates": "^17.1.12",
     "nyc": "^17.1.0",

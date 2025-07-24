@@ -209,16 +209,16 @@ class GameCoordinator {
       const imgBase = 'app/style/graphics/spriteSheets/';
       const imgSources = [
         // Pacman
-        `${imgBase}characters/pacman/arrow_down.svg`,
-        `${imgBase}characters/pacman/arrow_left.svg`,
-        `${imgBase}characters/pacman/arrow_right.svg`,
-        `${imgBase}characters/pacman/arrow_up.svg`,
-        `${imgBase}characters/pacman/pacman_death.svg`,
+        `${imgBase}characters/pacman/arrow_down_sirus.svg`,
+        `${imgBase}characters/pacman/arrow_left_sirus.svg`,
+        `${imgBase}characters/pacman/arrow_right_sirus.svg`,
+        `${imgBase}characters/pacman/arrow_up_sirus.svg`,
+        `${imgBase}characters/pacman/sirusman_death.svg`,
         `${imgBase}characters/pacman/pacman_error.svg`,
-        `${imgBase}characters/pacman/pacman_down.svg`,
-        `${imgBase}characters/pacman/pacman_left.svg`,
-        `${imgBase}characters/pacman/pacman_right.svg`,
-        `${imgBase}characters/pacman/pacman_up.svg`,
+        `${imgBase}characters/pacman/sirusman_down.svg`,
+        `${imgBase}characters/pacman/sirusman_left.svg`,
+        `${imgBase}characters/pacman/sirusman_right.svg`,
+        `${imgBase}characters/pacman/sirusman_up.svg`,
 
         // Blinky
         `${imgBase}characters/ghosts/blinky/blinky_down_angry.svg`,
@@ -261,8 +261,8 @@ class GameCoordinator {
         `${imgBase}characters/ghosts/scared_white.svg`,
 
         // Dots
-        `${imgBase}pickups/pacdot.svg`,
-        `${imgBase}pickups/powerPellet.svg`,
+        `${imgBase}pickups/sirusdot_orange.svg`,
+        `${imgBase}pickups/powerPellet_orange.svg`,
 
         // Fruit
         `${imgBase}pickups/apple.svg`,
@@ -292,10 +292,10 @@ class GameCoordinator {
         `${imgBase}text/5000.svg`,
 
         // Maze
-        `${imgBase}maze/maze_blue.svg`,
+        `${imgBase}maze/maze_sirus.svg`,
 
         // Misc
-        'app/style/graphics/extra_life.svg',
+        'app/style/graphics/extra_life_sirus.svg',
       ];
 
       const audioBase = 'app/style/audio/';
@@ -643,7 +643,7 @@ class GameCoordinator {
 
     for (let i = 0; i < this.lives; i += 1) {
       const extraLifePic = document.createElement('img');
-      extraLifePic.setAttribute('src', 'app/style/graphics/extra_life.svg');
+      extraLifePic.setAttribute('src', 'app/style/graphics/extra_life_sirus.svg');
       extraLifePic.style.height = `${this.scaledTileSize * 2}px`;
       this.extraLivesDisplay.appendChild(extraLifePic);
     }
@@ -1044,15 +1044,15 @@ class GameCoordinator {
 
       this.mazeImg.src = `${imgBase}maze_white.svg`;
       new Timer(() => {
-        this.mazeImg.src = `${imgBase}maze_blue.svg`;
+        this.mazeImg.src = `${imgBase}maze_sirus.svg`;
         new Timer(() => {
           this.mazeImg.src = `${imgBase}maze_white.svg`;
           new Timer(() => {
-            this.mazeImg.src = `${imgBase}maze_blue.svg`;
+            this.mazeImg.src = `${imgBase}maze_sirus.svg`;
             new Timer(() => {
               this.mazeImg.src = `${imgBase}maze_white.svg`;
               new Timer(() => {
-                this.mazeImg.src = `${imgBase}maze_blue.svg`;
+                this.mazeImg.src = `${imgBase}maze_sirus.svg`;
                 new Timer(() => {
                   this.mazeCover.style.visibility = 'visible';
                   new Timer(() => {

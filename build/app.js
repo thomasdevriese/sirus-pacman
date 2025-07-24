@@ -863,7 +863,7 @@ class Pacman {
     this.setDefaultPosition(this.scaledTileSize);
     this.setSpriteSheet(this.direction);
     this.pacmanArrow.style.backgroundImage = 'url(app/style/graphics/'
-      + `spriteSheets/characters/pacman/arrow_${this.direction}.svg)`;
+      + `spriteSheets/characters/pacman/arrow_${this.direction}_sirus.svg)`;
   }
 
   /**
@@ -942,7 +942,7 @@ class Pacman {
    */
   setSpriteSheet(direction) {
     this.animationTarget.style.backgroundImage = 'url(app/style/graphics/'
-      + `spriteSheets/characters/pacman/pacman_${direction}.svg)`;
+      + `spriteSheets/characters/pacman/sirusman_${direction}.svg)`;
   }
 
   prepDeathAnimation() {
@@ -954,7 +954,7 @@ class Pacman {
     const bgSize = this.measurement * this.spriteFrames;
     this.animationTarget.style.backgroundSize = `${bgSize}px`;
     this.animationTarget.style.backgroundImage = 'url(app/style/'
-      + 'graphics/spriteSheets/characters/pacman/pacman_death.svg)';
+      + 'graphics/spriteSheets/characters/pacman/sirusman_death.svg)';
     this.animationTarget.style.backgroundPosition = '0px 0px';
     this.pacmanArrow.style.backgroundImage = '';
   }
@@ -967,7 +967,7 @@ class Pacman {
   changeDirection(newDirection, startMoving) {
     this.desiredDirection = newDirection;
     this.pacmanArrow.style.backgroundImage = 'url(app/style/graphics/'
-      + `spriteSheets/characters/pacman/arrow_${this.desiredDirection}.svg)`;
+      + `spriteSheets/characters/pacman/arrow_${this.desiredDirection}_sirus.svg)`;
 
     if (startMoving) {
       this.moving = true;
@@ -1319,16 +1319,16 @@ class GameCoordinator {
       const imgBase = 'app/style/graphics/spriteSheets/';
       const imgSources = [
         // Pacman
-        `${imgBase}characters/pacman/arrow_down.svg`,
-        `${imgBase}characters/pacman/arrow_left.svg`,
-        `${imgBase}characters/pacman/arrow_right.svg`,
-        `${imgBase}characters/pacman/arrow_up.svg`,
-        `${imgBase}characters/pacman/pacman_death.svg`,
+        `${imgBase}characters/pacman/arrow_down_sirus.svg`,
+        `${imgBase}characters/pacman/arrow_left_sirus.svg`,
+        `${imgBase}characters/pacman/arrow_right_sirus.svg`,
+        `${imgBase}characters/pacman/arrow_up_sirus.svg`,
+        `${imgBase}characters/pacman/sirusman_death.svg`,
         `${imgBase}characters/pacman/pacman_error.svg`,
-        `${imgBase}characters/pacman/pacman_down.svg`,
-        `${imgBase}characters/pacman/pacman_left.svg`,
-        `${imgBase}characters/pacman/pacman_right.svg`,
-        `${imgBase}characters/pacman/pacman_up.svg`,
+        `${imgBase}characters/pacman/sirusman_down.svg`,
+        `${imgBase}characters/pacman/sirusman_left.svg`,
+        `${imgBase}characters/pacman/sirusman_right.svg`,
+        `${imgBase}characters/pacman/sirusman_up.svg`,
 
         // Blinky
         `${imgBase}characters/ghosts/blinky/blinky_down_angry.svg`,
@@ -1371,8 +1371,8 @@ class GameCoordinator {
         `${imgBase}characters/ghosts/scared_white.svg`,
 
         // Dots
-        `${imgBase}pickups/pacdot.svg`,
-        `${imgBase}pickups/powerPellet.svg`,
+        `${imgBase}pickups/sirusdot_orange.svg`,
+        `${imgBase}pickups/powerPellet_orange.svg`,
 
         // Fruit
         `${imgBase}pickups/apple.svg`,
@@ -1402,10 +1402,10 @@ class GameCoordinator {
         `${imgBase}text/5000.svg`,
 
         // Maze
-        `${imgBase}maze/maze_blue.svg`,
+        `${imgBase}maze/maze_sirus.svg`,
 
         // Misc
-        'app/style/graphics/extra_life.svg',
+        'app/style/graphics/extra_life_sirus.svg',
       ];
 
       const audioBase = 'app/style/audio/';
@@ -1753,7 +1753,7 @@ class GameCoordinator {
 
     for (let i = 0; i < this.lives; i += 1) {
       const extraLifePic = document.createElement('img');
-      extraLifePic.setAttribute('src', 'app/style/graphics/extra_life.svg');
+      extraLifePic.setAttribute('src', 'app/style/graphics/extra_life_sirus.svg');
       extraLifePic.style.height = `${this.scaledTileSize * 2}px`;
       this.extraLivesDisplay.appendChild(extraLifePic);
     }
@@ -2154,15 +2154,15 @@ class GameCoordinator {
 
       this.mazeImg.src = `${imgBase}maze_white.svg`;
       new Timer(() => {
-        this.mazeImg.src = `${imgBase}maze_blue.svg`;
+        this.mazeImg.src = `${imgBase}maze_sirus.svg`;
         new Timer(() => {
           this.mazeImg.src = `${imgBase}maze_white.svg`;
           new Timer(() => {
-            this.mazeImg.src = `${imgBase}maze_blue.svg`;
+            this.mazeImg.src = `${imgBase}maze_sirus.svg`;
             new Timer(() => {
               this.mazeImg.src = `${imgBase}maze_white.svg`;
               new Timer(() => {
-                this.mazeImg.src = `${imgBase}maze_blue.svg`;
+                this.mazeImg.src = `${imgBase}maze_sirus.svg`;
                 new Timer(() => {
                   this.mazeCover.style.visibility = 'visible';
                   new Timer(() => {
@@ -2659,8 +2659,12 @@ class Pickup {
 
     if (type === 'fruit') {
       image = this.fruitImages[points] || 'cherry';
-    } else {
-      image = type;
+    }
+    else if (type === 'pacdot') {
+      image = 'sirusdot_orange'
+    }
+    else if (type === 'powerPellet') {
+      image = 'powerPellet_orange';
     }
 
     return `url(app/style/graphics/spriteSheets/pickups/${image}.svg)`;

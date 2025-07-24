@@ -86,8 +86,12 @@ class Pickup {
 
     if (type === 'fruit') {
       image = this.fruitImages[points] || 'cherry';
-    } else {
-      image = type;
+    }
+    else if (type === 'pacdot') {
+      image = 'sirusdot_orange'
+    }
+    else if (type === 'powerPellet') {
+      image = 'powerPellet_orange';
     }
 
     return `url(app/style/graphics/spriteSheets/pickups/${image}.svg)`;

@@ -33,7 +33,6 @@ body {
   position: absolute;
   right: 10px;
   top: 10px;
-  visibility: hidden;
 }
 
 .preload-div {
@@ -62,7 +61,7 @@ body {
   display: inline-block;
 }
 .header-buttons img {
-  height: 2rem;
+  height: 6rem;
 }
 .header-buttons button {
   background: none;
@@ -139,7 +138,7 @@ body {
 }
 
 .loading-cover {
-  background: #ffdf00;
+  background: #000;
   height: 100vh;
   position: absolute;
   top: 0;
@@ -171,31 +170,54 @@ body {
   z-index: 5;
 }
 
-.brent-ward-logo {
+.main-menu-text {
+  text-align: center;
+  max-width: 80vw;
+}
+.main-menu-text .text-large {
+  font-size: 96px;
+  margin-top: 12vh;
+  margin-bottom: 5vh;
+}
+.main-menu-text .text-small {
+  font-size: 32px;
+  margin-bottom: 12vh;
+  color: #0e4f5a;
+}
+@media screen and (max-width: 720px) {
+  .main-menu-text .text-large {
+    font-size: 14vw;
+  }
+  .main-menu-text .text-small {
+    font-size: 5vw;
+  }
+}
+
+.sirus-logo {
   position: absolute;
   top: 2rem;
   left: 3rem;
 }
-.brent-ward-logo img {
-  height: 2rem;
+.sirus-logo img {
+  height: 6rem;
 }
 
 .logo {
   width: 800px;
   max-width: 80vw;
-  margin-top: 25vh;
 }
 
 .game-start {
-  background-color: #fcc73f;
-  border: 5px solid #231f20;
+  background-color: #d47530;
+  border: 5px solid #000;
   border-radius: 10px;
-  box-shadow: 5px 5px #ee2a29;
+  box-shadow: 5px 5px #0e4f5a;
   color: #231f20;
   cursor: pointer;
   font-size: 48px;
   outline: none;
   padding: 16px;
+  margin-bottom: 16vh;
 }
 .game-start:active {
   box-shadow: none;
@@ -207,12 +229,12 @@ body {
 
 @media only screen and (max-width: 600px) {
   .game-start {
-    scale: 0.5;
+    scale: 0.7;
   }
 }
 .loading-container {
   background-color: #000;
-  border: 5px solid #2121ff;
+  border: 5px solid #0e4f5a;
   border-radius: 10px;
   height: 48px;
   position: absolute;
@@ -230,7 +252,7 @@ body {
 .loading-pacman {
   animation: loading-animation 0.3s steps(4) infinite;
   background-color: #000;
-  background-image: url("../app/style/graphics/spriteSheets/characters/pacman/pacman_right.svg");
+  background-image: url("../app/style/graphics/spriteSheets/characters/pacman/sirusman_right.svg");
   background-size: 192px;
   border-radius: 10px;
   height: 48px;
@@ -257,7 +279,7 @@ body {
 }
 
 .loading-dot {
-  background-image: url("../app/style/graphics/spriteSheets/pickups/pacdot.svg");
+  background-image: url("../app/style/graphics/spriteSheets/pickups/sirusdot_orange.svg");
   height: 6px;
   position: absolute;
   top: 50%;

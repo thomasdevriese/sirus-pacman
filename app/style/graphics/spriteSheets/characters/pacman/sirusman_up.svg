@@ -1,0 +1,15 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 16" width="64" height="16">
+	<title>sirusman_up</title>
+	<style>
+		.s0 { fill: #0e4f5a } 
+		.s1 { fill: #d47530 } 
+	</style>
+	<path id="blue_part" class="s0" d="m7.4 1l6.6 4.3v7.1l-6.6 2.6z"/>
+	<path id="orange_part" class="s1" d="m1 12.4l6.5 2.6v-14l-6.6 4.4z"/>
+	<path id="blue_part" class="s0" d="m26.1 3l3.9 6-2.2 6h-4.3v-5.5z"/>
+	<path id="orange_part" class="s1" d="m19.2 15h4.3v-5.5l-2.7-6.5-3.8 6z"/>
+	<path id="blue_part copy" class="s0" d="m58.1 3l3.9 6-2.2 6h-4.3v-5.5z"/>
+	<path id="orange_part copy" class="s1" d="m51.2 15h4.3v-5.5l-2.7-6.5-3.8 6z"/>
+	<path id="blue_part" class="s0" d="m46 4v7.3l-6.5 3.7v-6.6z"/>
+	<path id="orange_part" class="s1" d="m39.5 8.4l-6.5-4.4v7.3l6.5 3.7z"/>
+</svg>
