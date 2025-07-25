@@ -7,8 +7,8 @@
     <link href='https://fonts.googleapis.com/icon?family=Material+Icons'
       rel='stylesheet'>
     <title>Pacman</title>
-    <meta name="author" content="Brent Ward">
-    <meta name="description" content="The classic arcade game Pac-Man! Remade in Javascript by Brent Ward">
+    <meta name="author" content="Sirus Nv">
+    <meta name="description" content="The classic arcade game Pac-Man! Remade in Javascript and styled by Sirus">
     <meta name="keywords" content="Pac-Man, games, retro, arcade">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -24,13 +24,16 @@
         <a href="https://www.sirus.be" target="_blank" class="sirus-logo">
           <img src="app/style/graphics/sirus_logo.svg" alt="Sirus Website Link"/>
         </a>
-        <div class="main-menu-text">
-          <p class="text-large">SIRUS</p>
-          <p class="text-small">presents</p>
+        <button id='open-leaderboard' class='sirus-button open-leaderboard'>
+          LEADERBOARD
+        </button>
+        <div class='main-menu-text'>
+          <p class='text-large'>SIRUS</p>
+          <p class='text-small'>presents</p>
         </div>
         <img id='logo' class='logo' src='app/style/graphics/pacman_logo_sirus_2.png' alt='Pacman Logo'>
-        <button id='game-start' class='game-start'>
-          PLAY
+        <button id='open-player-info' class='sirus-button open-player-info'>
+          START
         </button>
       </div>
 
@@ -120,6 +123,40 @@
 
           This could be due to a poor connection, a strict network policy, or
           by playing on an unsupported browser.
+        </div>
+      </div>
+
+      <div id='leaderboard' class='leaderboard'>
+        <button id='close-leaderboard' class='sirus-button close-leaderboard'>
+          X
+        </button>
+        <p class='leaderboard-title'>LEADERBOARD</p>
+        <div id='leaderboard-container' class='leaderboard-container'>
+          <table class='leaderboard-table'>
+            <thead>
+              <tr>
+                <th class='name-col'>Name</th>
+                <th class='score-col'>Score</th>
+              </tr>
+            </thead>
+            <tbody id='leaderboard-body'>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id='player-info-backdrop' class='player-info-backdrop hidden'>
+        <div id='player-info' class='player-info'>
+          <button id='close-player-info' class='sirus-button close-player-info'>
+            X
+          </button>
+          <p>Name</p>
+          <input type="text" id='name-input'>
+          <p>Email</p>
+          <input type="email" id='email-input'>
+          <button id='play-game' class='sirus-button play-game' disabled>
+            PLAY
+          </button>
         </div>
       </div>
 

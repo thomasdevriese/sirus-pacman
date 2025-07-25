@@ -1,1 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><svg id="Laag_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 227.83 228.45"><defs><style>.cls-1{fill:#eb7e39;}.cls-2{fill:#094f59;}</style></defs><polygon class="cls-2" points="68.97 186.17 133.83 186.17 166.26 138.16 133.83 90.16 133.83 90.16 101.4 138.16 68.97 186.17"/><polygon class="cls-1" points="62.5 90.16 94.93 138.16 94.93 138.16 127.35 90.16 159.78 42.15 94.93 42.15 62.5 90.16"/></svg>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 580" width="420" height="580">
+	<title>New Project</title>
+	<defs>
+		<image width="912" height="916" id="img1" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJMYWFnXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDIyNy44MyAyMjguNDUiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojZWI3ZTM5O30uY2xzLTJ7ZmlsbDojMDk0ZjU5O308L3N0eWxlPjwvZGVmcz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iNjguOTcgMTg2LjE3IDEzMy44MyAxODYuMTcgMTY2LjI2IDEzOC4xNiAxMzMuODMgOTAuMTYgMTMzLjgzIDkwLjE2IDEwMS40IDEzOC4xNiA2OC45NyAxODYuMTciLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjIuNSA5MC4xNiA5NC45MyAxMzguMTYgOTQuOTMgMTM4LjE2IDEyNy4zNSA5MC4xNiAxNTkuNzggNDIuMTUgOTQuOTMgNDIuMTUgNjIuNSA5MC4xNiIvPjwvc3ZnPg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="sirus_logo" href="#img1" transform="matrix(1.001,0,0,1.001,-248,-167)"/>
+</svg>

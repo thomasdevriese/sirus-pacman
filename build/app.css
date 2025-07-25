@@ -61,7 +61,7 @@ body {
   display: inline-block;
 }
 .header-buttons img {
-  height: 6rem;
+  height: 4rem;
 }
 .header-buttons button {
   background: none;
@@ -73,6 +73,24 @@ body {
 }
 .header-buttons button .material-icons {
   font-size: 40px;
+}
+
+.sirus-button {
+  background-color: #d47530;
+  border: 5px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px #0e4f5a;
+  color: #231f20;
+  cursor: pointer;
+  outline: none;
+  padding: 16px;
+}
+.sirus-button:active {
+  box-shadow: none;
+  transform: translateX(5px) translateY(5px);
+}
+.sirus-button:disabled {
+  cursor: default;
 }
 
 .paused-text {
@@ -170,6 +188,27 @@ body {
   z-index: 5;
 }
 
+.sirus-logo {
+  position: absolute;
+  top: 2rem;
+  left: 3rem;
+}
+.sirus-logo img {
+  height: 4rem;
+}
+
+.open-leaderboard {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  font-size: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+  .open-leaderboard {
+    scale: 0.5;
+  }
+}
 .main-menu-text {
   text-align: center;
   max-width: 80vw;
@@ -193,45 +232,87 @@ body {
   }
 }
 
-.sirus-logo {
-  position: absolute;
-  top: 2rem;
-  left: 3rem;
-}
-.sirus-logo img {
-  height: 6rem;
-}
-
 .logo {
   width: 800px;
   max-width: 80vw;
 }
 
-.game-start {
-  background-color: #d47530;
-  border: 5px solid #000;
-  border-radius: 10px;
-  box-shadow: 5px 5px #0e4f5a;
-  color: #231f20;
-  cursor: pointer;
+.open-player-info {
   font-size: 48px;
-  outline: none;
-  padding: 16px;
   margin-bottom: 16vh;
-}
-.game-start:active {
-  box-shadow: none;
-  transform: translateX(5px) translateY(5px);
-}
-.game-start:disabled {
-  cursor: default;
 }
 
 @media only screen and (max-width: 600px) {
-  .game-start {
+  .open-player-info {
     scale: 0.7;
   }
 }
+.player-info-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 12;
+}
+.player-info-backdrop .player-info {
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  background-color: #000;
+  border: 5px solid #d47530;
+  border-radius: 10px;
+  box-shadow: 5px 5px #0e4f5a;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+.player-info-backdrop .player-info .close-player-info {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 24px;
+}
+.player-info-backdrop .player-info p {
+  font-size: 24px;
+}
+.player-info-backdrop .player-info input {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+.player-info-backdrop .player-info .play-game {
+  font-size: 48px;
+  align-self: center;
+}
+.player-info-backdrop .player-info .play-game:disabled {
+  background-color: lightgray;
+  box-shadow: none;
+  transform: translateX(5px) translateY(5px);
+}
+
+.player-info-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.player-info-backdrop.show .player-info {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.player-info-backdrop.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .loading-container {
   background-color: #000;
   border: 5px solid #0e4f5a;
@@ -396,6 +477,75 @@ body {
 .error-message .body {
   font-size: 20px;
   line-height: 1.25;
+}
+
+.leaderboard {
+  position: fixed;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  top: -100vh;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  transition: none;
+}
+.leaderboard .close-leaderboard {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  font-size: 24px;
+}
+.leaderboard .leaderboard-title {
+  font-size: 64px;
+  margin-top: 8vh;
+  margin-bottom: 8vh;
+}
+.leaderboard .leaderboard-container {
+  overflow: auto;
+  height: 70vh;
+  width: 60%;
+  border: 5px solid #d47530;
+  border-radius: 10px;
+  box-shadow: 5px 5px #0e4f5a;
+  scrollbar-color: #0e4f5a #d47530;
+  scrollbar-width: thin;
+}
+.leaderboard .leaderboard-container .leaderboard-table {
+  width: 100%;
+  font-size: 32px;
+}
+.leaderboard .leaderboard-container .leaderboard-table th {
+  position: sticky;
+  background-color: #000;
+  top: 0;
+  z-index: 11;
+  font-weight: normal;
+  padding: 24px 16px;
+}
+.leaderboard .leaderboard-container .leaderboard-table .name-col {
+  width: 100%;
+  text-align: left;
+}
+.leaderboard .leaderboard-container .leaderboard-table .score-col {
+  white-space: nowrap;
+  text-align: right;
+}
+.leaderboard .leaderboard-container .leaderboard-table td {
+  padding: 16px;
+}
+.leaderboard .leaderboard-container .leaderboard-table tr.most-recent {
+  color: red;
+}
+
+.leaderboard.show {
+  top: 0;
+}
+
+.leaderboard.animate {
+  transition: top 0.5s ease-in-out;
 }
 .maze-cover {
   background: #000;

@@ -10,13 +10,23 @@ class GameCoordinator {
     this.extraLivesDisplay = document.getElementById('extra-lives');
     this.fruitDisplay = document.getElementById('fruit-display');
     this.mainMenu = document.getElementById('main-menu-container');
-    this.gameStartButton = document.getElementById('game-start');
+    this.openPlayerInfoButton = document.getElementById('open-player-info');
+    this.closePlayerInfoButton = document.getElementById('close-player-info');
+    this.playerInfoBackdrop = document.getElementById('player-info-backdrop');
+    this.nameInput = document.getElementById('name-input');
+    this.emailInput = document.getElementById('email-input');
+    this.playGameButton = document.getElementById('play-game');
     this.pauseButton = document.getElementById('pause-button');
     this.soundButton = document.getElementById('sound-button');
     this.leftCover = document.getElementById('left-cover');
     this.rightCover = document.getElementById('right-cover');
     this.pausedText = document.getElementById('paused-text');
     this.bottomRow = document.getElementById('bottom-row');
+    this.leaderboard = document.getElementById('leaderboard');
+    this.leaderboardContainer = document.getElementById('leaderboard-container');
+    this.openLeaderboardButton = document.getElementById('open-leaderboard');
+    this.closeLeaderboardButton = document.getElementById('close-leaderboard');
+    this.leaderboardBody = document.getElementById('leaderboard-body');
 
     this.mazeArray = [
       ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
@@ -93,15 +103,44 @@ class GameCoordinator {
       this.mazeArray[rowIndex] = row[0].split('');
     });
 
-    this.gameStartButton.addEventListener(
+    this.openPlayerInfoButton.addEventListener(
       'click',
-      this.startButtonClick.bind(this),
+      this.openPlayerInfo.bind(this),
     );
+    this.closePlayerInfoButton.addEventListener(
+      'click',
+      this.closePlayerInfo.bind(this),
+    );
+    this.playGameButton.addEventListener(
+      'click',
+      this.playGameButtonClick.bind(this),
+    );
+    this.openLeaderboardButton.addEventListener('click', () => {
+      this.openLeaderboard(false);
+    });
+    this.closeLeaderboardButton.addEventListener(
+      'click',
+      this.closeLeaderboard.bind(this),
+    );
+    this.nameInput.addEventListener('keyup', () => {
+      this.onInputChange();
+    });
+    this.emailInput.addEventListener('keyup', () => {
+      this.onInputChange();
+    });
     this.pauseButton.addEventListener('click', this.handlePauseKey.bind(this));
     this.soundButton.addEventListener(
       'click',
       this.soundButtonClick.bind(this),
     );
+
+    window.addEventListener('resize', () => {
+      this.leaderboard.classList.remove('animate');
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      this.leaderboard.classList.remove('animate');
+    });
 
     const head = document.getElementsByTagName('head')[0];
     const link = document.createElement('link');
@@ -144,14 +183,64 @@ class GameCoordinator {
     return scale - 1;
   }
 
+  openPlayerInfo() {
+    this.playerInfoBackdrop.classList.remove('hidden');
+    void this.playerInfoBackdrop.offsetWidth;
+    this.openPlayerInfoButton.disabled = true;
+    this.playerInfoBackdrop.classList.add('show');
+  }
+
+  closePlayerInfo() {
+    this.playerInfoBackdrop.classList.remove('show');
+    this.openPlayerInfoButton.disabled = false;
+
+    setTimeout(() => {
+      this.playerInfoBackdrop.classList.add('hidden');
+    }, 300);
+  }
+
+  onInputChange() {
+    const name = this.nameInput.value;
+    const email = this.emailInput.value;
+
+    if (!this.isEmptyOrSpaces(name) && this.validateEmail(email))
+    {
+      this.playGameButton.disabled = false;
+    }
+    else {
+      this.playGameButton.disabled = true;
+    }
+  }
+
+  isEmptyOrSpaces(str){
+      return str === null || str.match(/^ *$/) !== null;
+  }
+
+  validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   /**
    * Reveals the game underneath the loading covers and starts gameplay
    */
-  startButtonClick() {
+  playGameButtonClick() {
+    this.playerName = this.nameInput.value;
+    this.playerEmail = this.emailInput.value;
+    this.playerInfoBackdrop.classList.remove('show');
+
+    setTimeout(() => {
+      this.nameInput.value = '';
+      this.emailInput.value = '';
+    }, 300);
+
     this.leftCover.style.left = '-50%';
     this.rightCover.style.right = '-50%';
     this.mainMenu.style.opacity = 0;
-    this.gameStartButton.disabled = true;
+    this.playGameButton.disabled = true;
 
     setTimeout(() => {
       this.mainMenu.style.visibility = 'hidden';
@@ -163,6 +252,76 @@ class GameCoordinator {
       this.init();
     }
     this.startGameplay(true);
+  }
+
+  openLeaderboard(highlightLastPlayer) {
+    this.populateLeaderboard(highlightLastPlayer);
+
+    this.leaderboard.classList.add('animate');
+    this.leaderboard.classList.add('show');
+
+    if(highlightLastPlayer) {
+      setTimeout(() => {
+        const mostRecentRow = document.querySelector('.most-recent');
+        if (mostRecentRow) {
+          mostRecentRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 500);
+    }
+    else {
+      this.leaderboardContainer.scrollTop = 0;
+    }
+  }
+
+  closeLeaderboard() {
+    this.leaderboard.classList.add('animate');
+    this.leaderboard.classList.remove('show');
+  }
+
+  populateLeaderboard(highlightLastPlayer) {
+    const data = this.getLeaderboardData();
+    const mostRecentEntryDate = this.getMostRecentEntryDate(data);
+
+    // add data to table
+    this.leaderboardBody.innerHTML = data.map(entry => {
+      const isMostRecent = entry.date == mostRecentEntryDate;
+      return `
+      <tr class='${highlightLastPlayer ? (isMostRecent ? 'most-recent' : '') : ''}'>
+        <td class='name-col'>${entry.name}</td>
+        <td class='score-col'>${entry.score}</td>
+      </tr>
+      `
+    }).join('');
+  }
+
+  getMostRecentEntryDate(entries) {
+    return entries.reduce((latest, entry) =>
+      entry.date > latest.date ? entry : latest,
+      entries[0])?.date;
+  }
+
+  saveLeaderboardData(entries) {
+    localStorage.setItem('leaderboard', JSON.stringify(entries));
+  }
+
+  getLeaderboardData() {
+    const stored = localStorage.getItem('leaderboard');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  addScoreToLeaderboard(name, email, score, date) {
+    const leaderboard = this.getLeaderboardData();
+    leaderboard.push({
+      name,
+      email,
+      score,
+      date
+    });
+
+    // Sort by score
+    leaderboard.sort((a, b) => b.score - a.score);
+
+    this.saveLeaderboardData(leaderboard);
   }
 
   /**
@@ -926,6 +1085,9 @@ class GameCoordinator {
   gameOver() {
     localStorage.setItem('highScore', this.highScore);
 
+    this.playerDate = new Date().toISOString();
+    this.addScoreToLeaderboard(this.playerName, this.playerEmail, this.points, this.playerDate)
+
     new Timer(() => {
       this.displayText(
         {
@@ -944,9 +1106,13 @@ class GameCoordinator {
         this.rightCover.style.right = '0';
 
         setTimeout(() => {
-          this.mainMenu.style.opacity = 1;
-          this.gameStartButton.disabled = false;
-          this.mainMenu.style.visibility = 'visible';
+          this.openLeaderboard(true);
+
+          setTimeout(() => {
+            this.mainMenu.style.opacity = 1;
+            this.openPlayerInfoButton.disabled = false;
+            this.mainMenu.style.visibility = 'visible';
+          }, 1000);
         }, 1000);
       }, 2500);
     }, 2250);
