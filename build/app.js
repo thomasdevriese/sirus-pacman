@@ -1125,6 +1125,7 @@ class GameCoordinator {
     this.playerInfoBackdrop = document.getElementById('player-info-backdrop');
     this.nameInput = document.getElementById('name-input');
     this.emailInput = document.getElementById('email-input');
+    this.orgInput = document.getElementById('org-input');
     this.playGameButton = document.getElementById('play-game');
     this.pauseButton = document.getElementById('pause-button');
     this.soundButton = document.getElementById('sound-button');
@@ -1238,6 +1239,9 @@ class GameCoordinator {
     this.emailInput.addEventListener('keyup', () => {
       this.onInputChange();
     });
+    this.orgInput.addEventListener('keyup', () => {
+      this.onInputChange();
+    });
     this.pauseButton.addEventListener('click', this.handlePauseKey.bind(this));
     this.soundButton.addEventListener(
       'click',
@@ -1312,8 +1316,9 @@ class GameCoordinator {
   onInputChange() {
     const name = this.nameInput.value;
     const email = this.emailInput.value;
+    const org = this.orgInput.value;
 
-    if (!this.isEmptyOrSpaces(name) && this.validateEmail(email))
+    if (!this.isEmptyOrSpaces(name) && this.validateEmail(email) && !this.isEmptyOrSpaces(org))
     {
       this.playGameButton.disabled = false;
     }
@@ -1340,11 +1345,13 @@ class GameCoordinator {
   playGameButtonClick() {
     this.playerName = this.nameInput.value;
     this.playerEmail = this.emailInput.value;
+    this.playerOrg = this.orgInput.value;
     this.playerInfoBackdrop.classList.remove('show');
 
     setTimeout(() => {
       this.nameInput.value = '';
       this.emailInput.value = '';
+      this.orgInput.value = '';
     }, 300);
 
     this.leftCover.style.left = '-50%';
@@ -1398,6 +1405,7 @@ class GameCoordinator {
       return `
       <tr class='${highlightLastPlayer ? (isMostRecent ? 'most-recent' : '') : ''}'>
         <td class='name-col'>${entry.name}</td>
+        <td class='org-col'>${entry.org}</td>
         <td class='score-col'>${entry.score}</td>
       </tr>
       `
@@ -1419,11 +1427,12 @@ class GameCoordinator {
     return stored ? JSON.parse(stored) : [];
   }
 
-  addScoreToLeaderboard(name, email, score, date) {
+  addScoreToLeaderboard(name, email, org, score, date) {
     const leaderboard = this.getLeaderboardData();
     leaderboard.push({
       name,
       email,
+      org,
       score,
       date
     });
@@ -2196,7 +2205,7 @@ class GameCoordinator {
     localStorage.setItem('highScore', this.highScore);
 
     this.playerDate = new Date().toISOString();
-    this.addScoreToLeaderboard(this.playerName, this.playerEmail, this.points, this.playerDate)
+    this.addScoreToLeaderboard(this.playerName, this.playerEmail, this.playerOrg, this.points, this.playerDate)
 
     new Timer(() => {
       this.displayText(

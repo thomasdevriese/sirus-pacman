@@ -530,7 +530,7 @@ body {
   .leaderboard-container {
     overflow: auto;
     height: 70vh;
-    width: 60%;
+    width: 70%;
     border: 5px solid $sirus-orange;
     border-radius: 10px;
     box-shadow: 5px 5px $sirus-blue;
@@ -550,7 +550,7 @@ body {
         padding: 24px 16px;
       }
 
-      .name-col {
+      .name-col, .org-col {
         width: 100%;
         text-align: left;
       }

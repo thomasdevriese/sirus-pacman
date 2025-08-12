@@ -506,7 +506,7 @@ body {
 .leaderboard .leaderboard-container {
   overflow: auto;
   height: 70vh;
-  width: 60%;
+  width: 70%;
   border: 5px solid #d47530;
   border-radius: 10px;
   box-shadow: 5px 5px #0e4f5a;
@@ -525,7 +525,7 @@ body {
   font-weight: normal;
   padding: 24px 16px;
 }
-.leaderboard .leaderboard-container .leaderboard-table .name-col {
+.leaderboard .leaderboard-container .leaderboard-table .name-col, .leaderboard .leaderboard-container .leaderboard-table .org-col {
   width: 100%;
   text-align: left;
 }
