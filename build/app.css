@@ -525,6 +525,9 @@ body {
   font-weight: normal;
   padding: 24px 16px;
 }
+.leaderboard .leaderboard-container .leaderboard-table .rank-col {
+  text-align: right;
+}
 .leaderboard .leaderboard-container .leaderboard-table .name-col, .leaderboard .leaderboard-container .leaderboard-table .org-col {
   width: 100%;
   text-align: left;

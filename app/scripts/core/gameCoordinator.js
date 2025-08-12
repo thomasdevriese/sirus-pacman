@@ -290,10 +290,11 @@ class GameCoordinator {
     const mostRecentEntryDate = this.getMostRecentEntryDate(data);
 
     // add data to table
-    this.leaderboardBody.innerHTML = data.map(entry => {
+    this.leaderboardBody.innerHTML = data.map((entry, index) => {
       const isMostRecent = entry.date == mostRecentEntryDate;
       return `
       <tr class='${highlightLastPlayer ? (isMostRecent ? 'most-recent' : '') : ''}'>
+        <td class='rank-col'>${index + 1}</td>
         <td class='name-col'>${entry.name}</td>
         <td class='org-col'>${entry.org}</td>
         <td class='score-col'>${entry.score}</td>
@@ -319,13 +320,24 @@ class GameCoordinator {
 
   addScoreToLeaderboard(name, email, org, score, date) {
     const leaderboard = this.getLeaderboardData();
-    leaderboard.push({
-      name,
-      email,
-      org,
-      score,
-      date
-    });
+
+    // Search for existing player
+    const existingEntryIndex = leaderboard.findIndex(entry => entry.email === email);
+
+    if (existingEntryIndex !== -1) {
+      const existingEntry = leaderboard[existingEntryIndex];
+      if (score > existingEntry.score) {
+        // New high score -> update everything
+        leaderboard[existingEntryIndex] = { name, email, org, score, date };
+      } else if (score === existingEntry.score) {
+        // Score is the same -> update name, org & date
+        leaderboard[existingEntryIndex] = { ...existingEntry, name, org, date };
+      }
+      // If score is lower -> do nothing
+    } else {
+      // No existing entry -> add new one
+      leaderboard.push({ name, email, org, score, date });
+    }
 
     // Sort by score
     leaderboard.sort((a, b) => b.score - a.score);
