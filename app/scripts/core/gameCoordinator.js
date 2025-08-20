@@ -38,7 +38,10 @@ class GameCoordinator {
     this.leaderboardContainer = document.getElementById('leaderboard-container');
     this.openLeaderboardButton = document.getElementById('open-leaderboard');
     this.closeLeaderboardButton = document.getElementById('close-leaderboard');
-    this.leaderboardBody = document.getElementById('leaderboard-body');
+    this.todayButton = document.getElementById('today-btn');
+    this.alltimeButton = document.getElementById('alltime-btn');
+    this.leaderboardTodayBody = document.getElementById('leaderboard-today-body');
+    this.leaderboardAlltimeBody = document.getElementById('leaderboard-alltime-body');
 
     this.mazeArray = [
       ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
@@ -133,6 +136,14 @@ class GameCoordinator {
     this.closeLeaderboardButton.addEventListener(
       'click',
       this.closeLeaderboard.bind(this),
+    );
+    this.todayButton.addEventListener(
+      'click',
+      this.displayTodayTab.bind(this)
+    );
+    this.alltimeButton.addEventListener(
+      'click',
+      this.displayAlltimeTab.bind(this)
     );
     this.nameInput.addEventListener('keyup', () => {
       this.onInputChange();
@@ -315,22 +326,46 @@ class GameCoordinator {
     this.leaderboard.classList.add('animate');
     this.leaderboard.classList.add('show');
 
-    if(highlightLastPlayer) {
-      setTimeout(() => {
-        const mostRecentRow = document.querySelector('.most-recent');
-        if (mostRecentRow) {
-          mostRecentRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 500);
-    }
-    else {
-      this.leaderboardContainer.scrollTop = 0;
-    }
+    this.displayTodayTab();
   }
 
   closeLeaderboard() {
     this.leaderboard.classList.add('animate');
     this.leaderboard.classList.remove('show');
+  }
+
+  displayTodayTab() {
+    this.alltimeButton.classList.remove('active');
+    this.todayButton.classList.add('active');
+
+    this.leaderboardAlltimeBody.classList.remove('active');
+    this.leaderboardTodayBody.classList.add('active');
+
+    const mostRecentRow = document.querySelector('.most-recent.today');
+    if (mostRecentRow) {
+      setTimeout(() => {
+        mostRecentRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+    else
+      this.leaderboardContainer.scrollTop = 0;
+  }
+
+  displayAlltimeTab() {
+    this.todayButton.classList.remove('active');
+    this.alltimeButton.classList.add('active');
+
+    this.leaderboardTodayBody.classList.remove('active');
+    this.leaderboardAlltimeBody.classList.add('active');
+
+    const mostRecentRow = document.querySelector('.most-recent.alltime');
+    if (mostRecentRow) {
+      setTimeout(() => {
+        mostRecentRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+    else
+      this.leaderboardContainer.scrollTop = 0;
   }
 
   async syncLeaderboard() {
@@ -378,14 +413,20 @@ class GameCoordinator {
   }
 
   populateLeaderboard(highlightLastPlayer) {
-    const data = this.getLocalLeaderboard();
-    const mostRecentEntryDate = this.getMostRecentEntryDate(data);
+    const entries = this.getLocalLeaderboard();
+    const todayEntries = this.filterTodayEntries(entries);
 
-    // add data to table
-    this.leaderboardBody.innerHTML = data.map((entry, index) => {
+    this.populateLeaderboardTable(this.leaderboardTodayBody, todayEntries, true, highlightLastPlayer);
+    this.populateLeaderboardTable(this.leaderboardAlltimeBody, entries, false, highlightLastPlayer);
+  }
+
+  populateLeaderboardTable(table, entries, isToday, highlightLastPlayer) {
+    const mostRecentEntryDate = highlightLastPlayer ? this.getMostRecentEntryDate(entries) : null;
+
+    table.innerHTML = entries.map((entry, index) => {
       const isMostRecent = entry.date == mostRecentEntryDate;
       return `
-      <tr class='${highlightLastPlayer ? (isMostRecent ? 'most-recent' : '') : ''}'>
+      <tr class='${isMostRecent ? (isToday ? 'most-recent today' : 'most-recent alltime') : ''}'>
         <td class='rank-col'>${index + 1}</td>
         <td class='name-col'>${entry.name}</td>
         <td class='org-col'>${entry.org}</td>
@@ -393,6 +434,16 @@ class GameCoordinator {
       </tr>
       `
     }).join('');
+  }
+
+  filterTodayEntries(entries) {
+    const today = new Date();
+    return entries.filter(e => {
+      const d = new Date(e.date);
+      return d.getFullYear() === today.getFullYear() &&
+            d.getMonth() === today.getMonth() &&
+            d.getDate() === today.getDate();
+    });
   }
 
   getMostRecentEntryDate(entries) {

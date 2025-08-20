@@ -128,6 +128,10 @@
           X
         </button>
         <p class='leaderboard-title'>LEADERBOARD</p>
+        <div class='leaderboard-tabs'>
+          <span id='today-btn' class='tab-button active'>Today</span>
+          <span id='alltime-btn' class='tab-button'>All-time</span>
+        </div>
         <div id='leaderboard-container' class='leaderboard-container'>
           <table class='leaderboard-table'>
             <thead>
@@ -138,8 +142,8 @@
                 <th class='score-col'>Score</th>
               </tr>
             </thead>
-            <tbody id='leaderboard-body'>
-            </tbody>
+            <tbody id='leaderboard-today-body' class="active"></tbody>
+            <tbody id='leaderboard-alltime-body'></tbody>
           </table>
         </div>
       </div>
