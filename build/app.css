@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("../app/style/fonts/PressStart2P-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Material Icons";
+  src: url("../app/style/fonts/MaterialIcons-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 .ghost {
   margin: 0;
   position: absolute;
@@ -5,6 +17,19 @@
 }
 * {
   font-family: "Press Start 2P", sans-serif;
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: nowrap;
+  direction: ltr;
 }
 
 body {
@@ -529,7 +554,6 @@ body {
   text-align: right;
 }
 .leaderboard .leaderboard-container .leaderboard-table .name-col, .leaderboard .leaderboard-container .leaderboard-table .org-col {
-  width: 100%;
   text-align: left;
 }
 .leaderboard .leaderboard-container .leaderboard-table .score-col {

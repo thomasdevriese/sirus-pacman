@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const removeCode = require('gulp-remove-code');
+const esbuild = require('esbuild');
 
 function styles() {
   return gulp
@@ -12,11 +13,15 @@ function styles() {
 }
 
 function scripts() {
-  return gulp
-    .src('app/scripts/**/*.js')
-    .pipe(removeCode({ production: true }))
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest('build'));
+  return esbuild.build({
+    entryPoints: ['app/scripts/core/entry.js'],
+    bundle: true,
+    outfile: 'build/app.js',
+    platform: 'browser',
+    format: 'esm',
+    sourcemap: true,
+    minify: true,
+  }).catch((reason) => console.log(reason));
 }
 
 function watch() {

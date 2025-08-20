@@ -1,5 +1,16 @@
+import { BlobServiceClient } from "@azure/storage-blob";
+import CharacterUtil from "../utilities/characterUtil";
+import SoundManager from "../utilities/soundManager";
+import Timer from "../utilities/timer";
+import GameEngine from "../core/gameEngine";
+import Pacman  from "../characters/pacman";
+import Ghost  from "../characters/ghost";
+import Pickup from "../pickups/pickup";
+
 class GameCoordinator {
   constructor() {
+    this.initAzureConfig();
+
     this.gameUi = document.getElementById('game-ui');
     this.rowTop = document.getElementById('row-top');
     this.mazeDiv = document.getElementById('maze');
@@ -156,6 +167,43 @@ class GameCoordinator {
     head.appendChild(link);
   }
 
+  async initAzureConfig() {
+    const config = await fetch("./azure-config.json").then(r => r.json());
+
+    this.ACCOUNTNAME = config.ACCOUNTNAME;
+    this.CONTAINERNAME = config.CONTAINERNAME;
+    this.LEADERBOARDBLOBNAME = config.LEADERBOARDBLOBNAME;
+    this.SASTOKEN = config.SASTOKEN;
+
+    this.blobServiceClient = new BlobServiceClient(
+      `https://${this.ACCOUNTNAME}.blob.core.windows.net${this.SASTOKEN}`
+    )
+    this.containerClient = this.blobServiceClient.getContainerClient(this.CONTAINERNAME);
+
+    window.addEventListener('online', () => {
+      console.log('Connection restored. Syncing leaderboard now');
+      this.offlineGameplay = false;
+      this.syncLeaderboard();
+    });
+
+    window.addEventListener('offline', () => {
+      console.warn('Connection lost. Leaderboard will be stored locally until connection is restored.');
+      this.offlineGameplay = true;
+    });
+
+    if (navigator.onLine)
+    {
+      console.log('Online at startup. Syncing leaderboard now');
+      this.offlineGameplay = false;
+      this.syncLeaderboard();
+    }
+    else
+    {
+      console.warn('No internet connection. Leaderboard will be stored locally until connection is restored.');
+      this.offlineGameplay = true;
+    }
+  }
+
   /**
    * Recursive method which determines the largest possible scale the game's graphics can use
    * @param {Number} scale
@@ -285,8 +333,52 @@ class GameCoordinator {
     this.leaderboard.classList.remove('show');
   }
 
+  async syncLeaderboard() {
+    const localData = this.getLocalLeaderboard();
+
+    try {
+      const azureData = await this.getAzureLeaderboard();
+      const mergedLeaderboard = this.mergeLeaderboards(localData, azureData);
+      this.saveLocalLeaderboard(mergedLeaderboard);
+      await this.saveAzureLeaderboard(mergedLeaderboard);
+      this.highScore = mergedLeaderboard[0]?.score || 0;
+      localStorage.setItem('highScore', this.highScore);
+      console.log('Leaderboard synced!');
+    }
+    catch (err) {
+      console.warn("Syncing leaderboard with Azure failed, using local leaderboard.", err);
+    }
+  }
+
+  mergeLeaderboards(localData, azureData) {
+    const mergedMap = new Map();
+
+    const addOrUpdate = (entry) => {
+      const existing = mergedMap.get(entry.email);
+      if (!existing) {
+        mergedMap.set(entry.email, entry);
+      } else {
+        // Keep higher score
+        if (entry.score > existing.score) {
+          mergedMap.set(entry.email, entry);
+        } else if (entry.score === existing.score) {
+          // Keep most recent entry if scores are equal
+          if (new Date(entry.date) > new Date(existing.date)) {
+            mergedMap.set(entry.email, entry);
+          }
+        }
+      }
+    };
+
+    localData.forEach(addOrUpdate);
+    azureData.forEach(addOrUpdate);
+
+    // Return sorted array
+    return Array.from(mergedMap.values()).sort((a, b) => b.score - a.score);
+  }
+
   populateLeaderboard(highlightLastPlayer) {
-    const data = this.getLeaderboardData();
+    const data = this.getLocalLeaderboard();
     const mostRecentEntryDate = this.getMostRecentEntryDate(data);
 
     // add data to table
@@ -309,17 +401,34 @@ class GameCoordinator {
       entries[0])?.date;
   }
 
-  saveLeaderboardData(entries) {
-    localStorage.setItem('leaderboard', JSON.stringify(entries));
-  }
-
-  getLeaderboardData() {
+  getLocalLeaderboard() {
     const stored = localStorage.getItem('leaderboard');
     return stored ? JSON.parse(stored) : [];
   }
 
+  saveLocalLeaderboard(entries) {
+    localStorage.setItem('leaderboard', JSON.stringify(entries));
+  }
+
+  async getAzureLeaderboard() {
+    const blobClient = this.containerClient.getBlobClient(this.LEADERBOARDBLOBNAME);
+    const downloadResponse = await blobClient.download();
+    const blob = await downloadResponse.blobBody;
+    const text = await blob.text();
+    return text ? JSON.parse(text) : [];
+  }
+
+  async saveAzureLeaderboard(entries) {
+    const blobClient = this.containerClient.getBlockBlobClient(this.LEADERBOARDBLOBNAME);
+    const json = JSON.stringify(entries, null, 2);
+    await blobClient.upload(json, json.length, {
+      blobHTTPHeaders: { blobContentType: "application/json" },
+      overwrite: true
+    });
+  }
+
   addScoreToLeaderboard(name, email, org, score, date) {
-    const leaderboard = this.getLeaderboardData();
+    const leaderboard = this.getLocalLeaderboard();
 
     // Search for existing player
     const existingEntryIndex = leaderboard.findIndex(entry => entry.email === email);
@@ -342,7 +451,10 @@ class GameCoordinator {
     // Sort by score
     leaderboard.sort((a, b) => b.score - a.score);
 
-    this.saveLeaderboardData(leaderboard);
+    this.saveLocalLeaderboard(leaderboard);
+
+    if (!this.offlineGameplay)
+      this.syncLeaderboard();
   }
 
   /**
