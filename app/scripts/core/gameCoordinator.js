@@ -560,7 +560,7 @@ class GameCoordinator {
       const loadingPacman = document.getElementById('loading-pacman');
       const loadingDotMask = document.getElementById('loading-dot-mask');
 
-      const imgBase = 'app/style/graphics/spriteSheets/';
+      const imgBase = 'build/assets/graphics/spriteSheets/';
       const imgSources = [
         // Pacman
         `${imgBase}characters/pacman/arrow_down_sirus.svg`,
@@ -649,10 +649,10 @@ class GameCoordinator {
         `${imgBase}maze/maze_sirus.svg`,
 
         // Misc
-        'app/style/graphics/extra_life_sirus.svg',
+        'build/assets/graphics/extra_life_sirus.svg',
       ];
 
-      const audioBase = 'app/style/audio/';
+      const audioBase = 'build/assets/audio/';
       const audioSources = [
         `${audioBase}game_start.mp3`,
         `${audioBase}pause.mp3`,
@@ -755,7 +755,7 @@ class GameCoordinator {
     this.activeTimers = [];
     this.points = 0;
     this.level = 1;
-    this.lives = 2;
+    this.lives = 0; // todo: change back to 2
     this.extraLifeGiven = false;
     this.remainingDots = 0;
     this.allowKeyPresses = true;
@@ -997,7 +997,7 @@ class GameCoordinator {
 
     for (let i = 0; i < this.lives; i += 1) {
       const extraLifePic = document.createElement('img');
-      extraLifePic.setAttribute('src', 'app/style/graphics/extra_life_sirus.svg');
+      extraLifePic.setAttribute('src', 'build/assets/graphics/extra_life_sirus.svg');
       extraLifePic.style.height = `${this.scaledTileSize * 2}px`;
       this.extraLivesDisplay.appendChild(extraLifePic);
     }
@@ -1395,7 +1395,7 @@ class GameCoordinator {
     this.removeTimer({ detail: { timer: this.endIdleTimer } });
     this.removeTimer({ detail: { timer: this.ghostFlashTimer } });
 
-    const imgBase = 'app/style//graphics/spriteSheets/maze/';
+    const imgBase = 'build/assets//graphics/spriteSheets/maze/';
 
     new Timer(() => {
       this.ghosts.forEach((ghost) => {
@@ -1597,7 +1597,7 @@ class GameCoordinator {
 
     pointsDiv.style.position = 'absolute';
     pointsDiv.style.backgroundSize = `${width}px`;
-    pointsDiv.style.backgroundImage = 'url(app/style/graphics/'
+    pointsDiv.style.backgroundImage = 'url(build/assets/graphics/'
         + `spriteSheets/text/${amount}.svg`;
     pointsDiv.style.width = `${width}px`;
     pointsDiv.style.height = `${height || width}px`;

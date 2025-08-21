@@ -4,6 +4,10 @@ const concat = require('gulp-concat');
 const removeCode = require('gulp-remove-code');
 const esbuild = require('esbuild');
 
+function html() {
+  return gulp.src('index.html').pipe(gulp.dest('build'));
+}
+
 function styles() {
   return gulp
     .src('app/style/scss/**/*.scss')
@@ -29,7 +33,7 @@ function watch() {
   gulp.watch('app/scripts/**/*.js', scripts);
 }
 
-const build = gulp.parallel(styles, scripts);
+const build = gulp.parallel(html, styles, scripts);
 
 exports.watch = watch;
 exports.default = build;

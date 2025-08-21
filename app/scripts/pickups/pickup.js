@@ -94,7 +94,7 @@ class Pickup {
       image = 'powerPellet_orange';
     }
 
-    return `url(app/style/graphics/spriteSheets/pickups/${image}.svg)`;
+    return `url(build/assets/graphics/spriteSheets/pickups/${image}.svg)`;
   }
 
   /**
