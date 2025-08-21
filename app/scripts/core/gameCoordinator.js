@@ -27,6 +27,7 @@ class GameCoordinator {
     this.nameInput = document.getElementById('name-input');
     this.emailInput = document.getElementById('email-input');
     this.orgInput = document.getElementById('org-input');
+    this.playerInfoInputs = document.querySelectorAll('#player-info input');
     this.playGameButton = document.getElementById('play-game');
     this.pauseButton = document.getElementById('pause-button');
     this.soundButton = document.getElementById('sound-button');
@@ -154,6 +155,15 @@ class GameCoordinator {
     this.orgInput.addEventListener('keyup', () => {
       this.onInputChange();
     });
+    this.playerInfoInputs.forEach(input => {
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          if (!this.playGameButton.disabled)
+            this.playGameButton.click();
+        }
+      });
+    });
     this.pauseButton.addEventListener('click', this.handlePauseKey.bind(this));
     this.soundButton.addEventListener(
       'click',
@@ -251,6 +261,7 @@ class GameCoordinator {
     void this.playerInfoBackdrop.offsetWidth;
     this.openPlayerInfoButton.disabled = true;
     this.playerInfoBackdrop.classList.add('show');
+    this.nameInput.focus();
   }
 
   closePlayerInfo() {
