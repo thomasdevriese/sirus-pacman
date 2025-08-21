@@ -18,7 +18,7 @@ class Pacman {
     this.setStyleMeasurements(this.scaledTileSize, this.spriteFrames);
     this.setDefaultPosition(this.scaledTileSize);
     this.setSpriteSheet(this.direction);
-    this.pacmanArrow.style.backgroundImage = 'url(app/style/graphics/'
+    this.pacmanArrow.style.backgroundImage = 'url(assets/graphics/'
       + `spriteSheets/characters/pacman/arrow_${this.direction}_sirus.svg)`;
   }
 
@@ -97,7 +97,7 @@ class Pacman {
    * @param {('up'|'down'|'left'|'right')} direction - The character's current travel orientation
    */
   setSpriteSheet(direction) {
-    this.animationTarget.style.backgroundImage = 'url(app/style/graphics/'
+    this.animationTarget.style.backgroundImage = 'url(assets/graphics/'
       + `spriteSheets/characters/pacman/sirusman_${direction}.svg)`;
   }
 
@@ -109,7 +109,7 @@ class Pacman {
     this.backgroundOffsetPixels = 0;
     const bgSize = this.measurement * this.spriteFrames;
     this.animationTarget.style.backgroundSize = `${bgSize}px`;
-    this.animationTarget.style.backgroundImage = 'url(app/style/'
+    this.animationTarget.style.backgroundImage = 'url(assets/'
       + 'graphics/spriteSheets/characters/pacman/sirusman_death.svg)';
     this.animationTarget.style.backgroundPosition = '0px 0px';
     this.pacmanArrow.style.backgroundImage = '';
@@ -122,7 +122,7 @@ class Pacman {
    */
   changeDirection(newDirection, startMoving) {
     this.desiredDirection = newDirection;
-    this.pacmanArrow.style.backgroundImage = 'url(app/style/graphics/'
+    this.pacmanArrow.style.backgroundImage = 'url(assets/graphics/'
       + `spriteSheets/characters/pacman/arrow_${this.desiredDirection}_sirus.svg)`;
 
     if (startMoving) {
