@@ -181,7 +181,7 @@ class GameCoordinator {
     const head = document.getElementsByTagName('head')[0];
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'build/app.css';
+    link.href = 'app.css';
 
     link.onload = this.preloadAssets.bind(this);
 
