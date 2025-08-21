@@ -1,0 +1,74 @@
+@use 'variables';
+
+.player-info-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 12;
+
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    padding: 48px;
+    background-color: variables.$black;
+    border: 5px solid variables.$sirus-orange;
+    border-radius: 10px;
+    box-shadow: 5px 5px variables.$sirus-blue;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+
+    .close-player-info {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 24px;
+    }
+
+    input {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .play-game {
+      font-size: 48px;
+      align-self: center;
+
+      &:disabled {
+        background-color: lightgray;
+        box-shadow: none;
+        transform: translateX(5px) translateY(5px);
+      }
+    }
+  }
+}
+
+.player-info-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+
+  .player-info {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.player-info-backdrop.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

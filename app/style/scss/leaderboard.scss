@@ -1,0 +1,122 @@
+@use 'variables';
+
+.leaderboard {
+  position: fixed;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  top: -100vh;
+  width: 100vw;
+  height: 100vh;
+  background-color: variables.$black;
+  color: variables.$white;
+  transition: none;
+  
+  .close-leaderboard {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    font-size: 24px;
+  }
+
+  .leaderboard-title {
+    font-size: 64px;
+    margin-top: 8vh;
+    margin-bottom: 4vh;
+  }
+
+  .leaderboard-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vh;
+    font-size: 24px;
+
+    .tab-button {
+      margin: 0 32px;
+      padding-bottom: 8px;
+      cursor: pointer;
+      transition: color 0.3s ease, border-color 0.3s ease;
+
+      &.active {
+        color: variables.$sirus-orange;
+        border-bottom: 3px solid variables.$sirus-orange;
+      }
+
+      &:hover {
+        color: variables.$sirus-blue;
+        border-color: variables.$sirus-blue;
+      }
+    }
+  }
+
+  .leaderboard-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 70vh;
+    width: 70%;
+    border: 5px solid variables.$sirus-orange;
+    border-radius: 10px;
+    box-shadow: 5px 5px variables.$sirus-blue;
+    scrollbar-color: variables.$sirus-blue variables.$sirus-orange;
+    scrollbar-width: thin;
+
+    .leaderboard-table {
+      width: 100%;
+      font-size: 32px;
+
+      th {
+        position: sticky;
+        background-color: variables.$black;
+        top: 0;
+        z-index: 11;
+        font-weight: normal;
+        padding: 24px 16px;
+      }
+
+      tbody {
+        display: none;
+      }
+
+      tbody.active {
+        display: table-row-group;
+      }
+
+      .rank-col {
+        text-align: right;
+      }
+
+      .name-col, .org-col {
+        // width: 100%;
+        text-align: left;
+      }
+
+      .score-col {
+        white-space: nowrap;
+        text-align: right;
+      }
+
+      td {
+        padding: 16px;
+      }
+
+      tr.most-recent {
+        color: red;
+      }
+    }
+  }
+
+  @media (max-height: 800px) {
+    .leaderboard-container {
+      height: 65vh;
+    }
+  }
+}
+
+.leaderboard.show {
+  top: 0;
+}
+
+.leaderboard.animate {
+  transition: top variables.$generic-duration ease-in-out;
+}
