@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables';
 
 * {
   font-family: 'Press Start 2P', sans-serif;
@@ -23,8 +23,8 @@ body {
 }
 
 .overflow-mask {
-  background-color: $black;
-  color: $white;
+  background-color: variables.$black;
+  color: variables.$white;
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -79,7 +79,7 @@ body {
   button {
     background: none;
     border: 0;
-    color: $white;
+    color: variables.$white;
     cursor: pointer;
     outline: none;
     padding: 0;
@@ -91,11 +91,11 @@ body {
 }
 
 .sirus-button {
-  background-color: $sirus-orange;
-  border: 5px solid $black;
+  background-color: variables.$sirus-orange;
+  border: 5px solid variables.$black;
   border-radius: 10px;
-  box-shadow: 5px 5px $sirus-blue;
-  color: $logo-black;
+  box-shadow: 5px 5px variables.$sirus-blue;
+  color: variables.$logo-black;
   cursor: pointer;
   outline: none;
   padding: 16px;
@@ -187,7 +187,7 @@ body {
 }
 
 .loading-cover {
-  background: $black;
+  background: variables.$black;
   height: 100vh;
   position: absolute;
   top: 0;
@@ -197,12 +197,12 @@ body {
 
 .left {
   left: 0;
-  transition: left $generic-duration ($generic-duration);
+  transition: left variables.$generic-duration (variables.$generic-duration);
 }
 
 .right {
   right: 0;
-  transition: right $generic-duration ($generic-duration);
+  transition: right variables.$generic-duration (variables.$generic-duration);
 }
 
 .main-menu-container {
@@ -255,7 +255,7 @@ body {
   .text-small {
     font-size: 32px;
     margin-bottom: 12vh ;
-    color: $sirus-blue;
+    color: variables.$sirus-blue;
   }
 
   @media screen and (max-width: 720px) {
@@ -306,10 +306,10 @@ body {
     // height: 70vh;
     // width: 60%;
     padding: 48px;
-    background-color: $black;
-    border: 5px solid $sirus-orange;
+    background-color: variables.$black;
+    border: 5px solid variables.$sirus-orange;
     border-radius: 10px;
-    box-shadow: 5px 5px $sirus-blue;
+    box-shadow: 5px 5px variables.$sirus-blue;
     transform: scale(0);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -361,13 +361,13 @@ body {
 }
 
 .loading-container {
-  background-color: $black;
-  border: 5px solid $sirus-blue;
+  background-color: variables.$black;
+  border: 5px solid variables.$sirus-blue;
   border-radius: 10px;
   height: 48px;
   position: absolute;
   top: 50%;
-  transition: opacity $generic-duration $loading-pacman-duration;
+  transition: opacity variables.$generic-duration variables.$loading-pacman-duration;
   width: 500px;
   z-index: 5;
 }
@@ -380,13 +380,13 @@ body {
 
 .loading-pacman {
   animation: loading-animation 0.3s steps(4) infinite;
-  background-color: $black;
+  background-color: variables.$black;
   background-image: url('../app/style/graphics/spriteSheets/characters/pacman/sirusman_right.svg');
   background-size: 192px;
   border-radius: 10px;
   height: 48px;
   position: absolute;
-  transition: left $loading-pacman-duration;
+  transition: left variables.$loading-pacman-duration;
   width: 48px;
   z-index: 6;
 }
@@ -398,13 +398,13 @@ body {
 }
 
 .loading-dot-mask {
-  background-color: $black;
+  background-color: variables.$black;
   border-radius: 10px;
   height: 48px;
   left: 0;
   position: absolute;
   top: 0;
-  transition: width $loading-pacman-duration;
+  transition: width variables.$loading-pacman-duration;
   z-index: -1;
 }
 
@@ -477,11 +477,11 @@ body {
 }
 
 .error-message {
-  color: $logo-black;
+  color: variables.$logo-black;
   opacity: 0;
   position: absolute;
   top: 30vh;
-  transition: opacity $generic-duration;
+  transition: opacity variables.$generic-duration;
   visibility: hidden;
   width: 50vw;
   z-index: 4;
@@ -523,8 +523,8 @@ body {
   top: -100vh;
   width: 100vw;
   height: 100vh;
-  background-color: $black;
-  color: $white;
+  background-color: variables.$black;
+  color: variables.$white;
   transition: none;
   
   .close-leaderboard {
@@ -553,13 +553,13 @@ body {
       transition: color 0.3s ease, border-color 0.3s ease;
 
       &.active {
-        color: $sirus-orange;
-        border-bottom: 3px solid $sirus-orange;
+        color: variables.$sirus-orange;
+        border-bottom: 3px solid variables.$sirus-orange;
       }
 
       &:hover {
-        color: $sirus-blue;
-        border-color: $sirus-blue;
+        color: variables.$sirus-blue;
+        border-color: variables.$sirus-blue;
       }
     }
   }
@@ -569,10 +569,10 @@ body {
     overflow-x: hidden;
     height: 70vh;
     width: 70%;
-    border: 5px solid $sirus-orange;
+    border: 5px solid variables.$sirus-orange;
     border-radius: 10px;
-    box-shadow: 5px 5px $sirus-blue;
-    scrollbar-color: $sirus-blue $sirus-orange;
+    box-shadow: 5px 5px variables.$sirus-blue;
+    scrollbar-color: variables.$sirus-blue variables.$sirus-orange;
     scrollbar-width: thin;
 
     .leaderboard-table {
@@ -581,7 +581,7 @@ body {
 
       th {
         position: sticky;
-        background-color: $black;
+        background-color: variables.$black;
         top: 0;
         z-index: 11;
         font-weight: normal;
@@ -632,5 +632,5 @@ body {
 }
 
 .leaderboard.animate {
-  transition: top $generic-duration ease-in-out;
+  transition: top variables.$generic-duration ease-in-out;
 }
