@@ -160,6 +160,7 @@ class GameCoordinator {
         if (e.key === "Enter") {
           e.preventDefault();
           if (!this.playGameButton.disabled)
+            this.playGameButton.focus();
             this.playGameButton.click();
         }
       });
