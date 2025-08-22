@@ -25,6 +25,12 @@ function scripts() {
     format: 'esm',
     sourcemap: true,
     minify: true,
+    define: {
+      'process.env.ACCOUNTNAME': JSON.stringify(process.env.AZURE_ACCOUNTNAME),
+      'process.env.CONTAINERNAME': JSON.stringify(process.env.AZURE_BLOBCONTAINERNAME),
+      'process.env.LEADERBOARDBLOBNAME' : JSON.stringify(process.env.AZURE_LEADERBOARDBLOBNAME),
+      'process.env.SASTOKEN': JSON.stringify(process.env.AZURE_SASTOKEN)
+    }
   }).catch((reason) => console.log(reason));
 }
 

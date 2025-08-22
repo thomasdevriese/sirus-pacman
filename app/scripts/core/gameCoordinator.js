@@ -189,12 +189,10 @@ class GameCoordinator {
   }
 
   async initAzureConfig() {
-    const config = await fetch("./azure-config.json").then(r => r.json());
-
-    this.ACCOUNTNAME = config.ACCOUNTNAME;
-    this.CONTAINERNAME = config.CONTAINERNAME;
-    this.LEADERBOARDBLOBNAME = config.LEADERBOARDBLOBNAME;
-    this.SASTOKEN = config.SASTOKEN;
+    this.ACCOUNTNAME = process.env.ACCOUNTNAME;
+    this.CONTAINERNAME = process.env.CONTAINERNAME;
+    this.LEADERBOARDBLOBNAME = process.env.LEADERBOARDBLOBNAME;
+    this.SASTOKEN = process.env.SASTOKEN;
 
     this.blobServiceClient = new BlobServiceClient(
       `https://${this.ACCOUNTNAME}.blob.core.windows.net${this.SASTOKEN}`
