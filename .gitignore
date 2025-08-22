@@ -1,3 +1,6 @@
 /node_modules
 /.nyc_output
 azure-config.json
+build/app.css
+build/app.js
+build/app.js.map
