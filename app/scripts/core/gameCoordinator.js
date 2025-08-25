@@ -754,7 +754,7 @@ class GameCoordinator {
     this.activeTimers = [];
     this.points = 0;
     this.level = 1;
-    this.lives = 0; // todo: change back to 2
+    this.lives = 2;
     this.extraLifeGiven = false;
     this.remainingDots = 0;
     this.allowKeyPresses = true;
